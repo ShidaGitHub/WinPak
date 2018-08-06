@@ -1,0 +1,54 @@
+<ui:composition template="/templates/report_layout.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+
+    <ui:define name="title">Выданные карты</ui:define>
+    <ui:define name="top">
+        <p:link outcome="/views/report08/report08set">
+            <h:graphicImage library="images" name="baseline_arrow_back.png" style="vertical-align: bottom"/>
+        </p:link>
+        Выданные карты: 
+        <h:outputText value="#{report08.date1}" >
+            <f:convertDateTime pattern="dd.MM.yy" timeZone="#{report08.getTimeZone()}" />
+        </h:outputText>
+         - 
+        <h:outputText value="#{report08.date2}" >
+            <f:convertDateTime pattern="dd.MM.yy" timeZone="#{report08.getTimeZone()}" />
+        </h:outputText>
+    </ui:define>
+
+    <ui:define name="content">
+        <h:form id="form_report">
+            <p:growl id="msgs" showDetail="true" />
+            <div>
+                <p:dataTable id="report_dataTable" var="card" value="#{report08.report08Data}"  
+                             scrollable="true" scrollWidth="100%" paginator="true" rows="10"
+                             paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                             rowsPerPageTemplate="10,50,100">
+                    
+                    <f:facet name="header">
+                        <h:commandLink id="excel" >
+                            <p:graphicImage library="images" name="Excel.png" width="40"/>
+                            <p:dataExporter type="xls" target="report_dataTable" 
+                                            fileName="#{report08.getReportFileName()}" options="#{report08.excelOpt}" postProcessor="#{report08.postProcessXLS}"/>
+                        </h:commandLink>
+                    </f:facet>
+                    
+                    <p:columns value="#{report08.selected_fields}" var="column" columnIndexVar="colIndex" width="#{column.width}"
+                               filterBy="#{column.propIsObj ? card.cardHolder[column.property] : card[column.property]}">
+                        <f:facet name="header">
+                            <h:outputText value="#{column.header}" />
+                        </f:facet>
+                        <h:outputText value="#{column.propIsObj ? card.cardHolder[column.property] : card[column.property]}" >
+                            <f:convertDateTime pattern="dd.MM.yyyy" timeZone="#{report08.getTimeZone()}"/>
+                        </h:outputText>                        
+                    </p:columns>
+                </p:dataTable>
+            </div>
+        </h:form>
+    </ui:define>
+</ui:composition>

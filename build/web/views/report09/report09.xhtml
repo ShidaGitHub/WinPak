@@ -1,0 +1,99 @@
+<ui:composition template="/templates/report_layout.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+
+    <ui:define name="title">Учет времени (по подразд.)</ui:define>
+    <ui:define name="top">
+        <p:link outcome="/views/report09/report09set">
+            <h:graphicImage library="images" name="baseline_arrow_back.png" style="vertical-align: bottom"/>
+        </p:link>
+        
+        Учет времени #{report09.selectedDepartmentOpt.getDepartment()}: 
+        <h:outputText value="#{report09.date1}" >
+            <f:convertDateTime pattern="dd.MM.yy" timeZone="#{report09.getTimeZone()}" />
+        </h:outputText>
+         - 
+        <h:outputText value="#{report09.date2}" >
+            <f:convertDateTime pattern="dd.MM.yy" timeZone="#{report09.getTimeZone()}" />
+        </h:outputText>
+    </ui:define>
+
+    <ui:define name="content">
+        <h:form id="form_report">
+            <p:growl id="msgs" showDetail="true" />
+            <div>
+                <p:dataTable id="report_dataTable" var="report09Data" value="#{report09.report09Data}"
+                             scrollable="true" scrollWidth="100%" paginator="true" rows="15"
+                             paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                             rowsPerPageTemplate="15,51,111">
+                    
+                    <f:facet name="header">
+                        <h:commandLink id="excel" >
+                            <p:graphicImage library="images" name="Excel.png" width="40"/>
+                            <p:dataExporter type="xls" target="report_dataTable" fileName="#{report09.getReportFileName()}" postProcessor="#{report09.postProcessXLS}"/>
+                        </h:commandLink>
+                    </f:facet>
+                    
+                    <p:columnGroup type="header">
+                        <p:row>
+                            <p:column rowspan="2" headerText="ФИО" groupRow="true" filterBy="#{report09Data.name}" width="130" />
+                            <p:column rowspan="2" headerText="Табель" groupRow="true" filterBy="#{report09Data.tabNumber}" width="110" />
+                            <p:column rowspan="2" headerText="Данные" width="110"/>
+                            <ui:repeat value="#{report09.getDistinctDateRange()}" var="date">
+                                <p:column colspan="2" headerText="Дата" width="200">
+                                    <f:facet name="header">
+                                        <h:outputText value="#{date}" style="#{report09.isHoliday(date) ? 'color: #d20005' : ''}">
+                                            <f:convertDateTime pattern="dd MMMM" timeZone="#{report09.getTimeZone()}"/>
+                                        </h:outputText>
+                                    </f:facet>
+                                </p:column>
+                            </ui:repeat>
+                            <p:column rowspan="2" headerText="Итого" width="100"/>
+                        </p:row>
+                        <p:row>
+                            <ui:repeat value="#{report09.getDateRange()}" var="day" varStatus="dayStatus">
+                                <p:column headerText="#{dayStatus.index % 2 > 0 ? 'День' : 'Ночь'}" width="100"/>
+                            </ui:repeat>
+                        </p:row>
+                    </p:columnGroup>                    
+                    
+                    <p:column headerText="ФИО" groupRow="true"  exportable="false">
+                        <h:outputText value="#{report09Data.name}" />
+                    </p:column>
+                    <p:column headerText="Табель" groupRow="true" exportable="false">
+                        <h:outputText value="#{report09Data.tabNumber}" />
+                    </p:column>
+                    <p:column headerText="Данные" exportable="false">
+                        <h:outputText value="#{report09Data.getDataInfoStr()}" />
+                    </p:column>
+                    
+                    <p:columns value="#{report09.getDateRange()}" 
+                               var="period" columnIndexVar="colIndex"
+                               style = "#{report09Data.getTimeCol(colIndex)}"
+                               exportable="false">
+                        
+                        <f:facet name="header">
+                            <h:outputText value="#{period}" >
+                                <f:convertDateTime pattern="dd MMMM" timeZone="#{report09.getTimeZone()}"/>
+                            </h:outputText>
+                        </f:facet>
+                        
+                        <h:outputText value="#{colIndex % 2 > 0 ? report09Data.getDayTimeOnDate(period) : report09Data.getNightTimeOnDate(period)}"
+                                      rendered="#{report09Data.rendered(period, colIndex)}" >
+                            
+                            <f:convertDateTime pattern="HH:mm" timeZone="#{report09.getTimeZone()}" />
+                        </h:outputText>
+                    </p:columns>
+                    
+                    <p:column headerText="Итого" style = "#{report09Data.getTimeCol(0)}" exportable="false">
+                        <h:outputText value="#{report09Data.getTotal()}" />
+                    </p:column>
+                </p:dataTable>
+            </div>
+        </h:form>
+    </ui:define>
+</ui:composition>

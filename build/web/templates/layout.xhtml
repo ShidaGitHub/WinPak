@@ -1,0 +1,56 @@
+<?xml version='1.0' encoding='UTF-8' ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:insert name="meta"/>
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <title>Отчеты Winpak</title>
+    </h:head>
+
+    <h:body>
+        <h:outputStylesheet library="css" name="default.css" />
+        <h:outputStylesheet library="css" name="cssLayout.css" />
+        
+        <div>
+            <div id="left">
+                <h:form id="form_main_menu">
+                    
+                    <p:graphicImage library="images" name="LogoWinPak.png" width="100" style="display: block; margin-left: auto; margin-right: auto; padding: 30px;"/>
+                    
+                    <p:menu id="main_menu">
+                        <p:submenu>
+                            <p:separator/>
+                            <p:menuitem value="Сотрудники на заводе" outcome="/views/report01/report01set"/>
+                            <p:separator/>
+                            <p:menuitem value="Вошедщие, но не вышедшие" outcome="/views/report02/report02set"/>
+                            <p:separator/>
+                            <p:menuitem value="События с картами" outcome="/views/report03/report03set"/>
+                            <p:separator/>
+                            <p:menuitem value="События, с интервалом" outcome="/views/report04/report04set"/>
+                            <p:separator/>
+                            <p:menuitem value="Учет времени" outcome="/views/report05/report05set"/>
+                            <p:separator/>
+                            <p:menuitem value="Отсутствующие" outcome="/views/report06/report06set"/>
+                            <p:separator/>
+                            <p:menuitem value="Опоздавшие/Преждевременно" outcome="/views/report07/report07set"/>
+                            <p:separator/>
+                            <p:menuitem value="Выданные карты" outcome="/views/report08/report08set"/>
+                            <p:separator/>
+                            <p:menuitem value="Учет времени (по подразд.)" outcome="/views/report09/report09set"/>
+                        </p:submenu>
+                    </p:menu>
+                </h:form>
+            </div>
+            <div id="top" class="top">
+                <ui:insert name="top" />
+            </div>
+            <div id="content" class="left_content">
+                <ui:insert name="content" />
+            </div>
+        </div>
+    </h:body>
+</html>

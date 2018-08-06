@@ -1,0 +1,99 @@
+#left {
+    position: relative;
+    float: left;
+    background-color: #ffffff;
+    margin: 0px 0px 0px 0px;
+    height: 98vh;
+    background-color: #595c5d;
+}
+
+#top {
+    position: relative;
+    background-color: #14A4FF;
+    color: white;
+    font-size: x-large;
+    font-weight: bold;
+    padding: 15px;
+    margin-left: 300px;
+}
+
+#bottom {
+    position: relative;
+    background-color: #c2dfef;
+    padding: 5px;
+    margin: 10px 0px 0px 0px;
+}
+
+#right {
+    float: right;
+    background-color: #ece3a5;
+    padding: 5px;
+    width: 150px;
+}
+
+.center_content {
+    position: relative;
+    background-color: #ffffff;
+    padding: 5px;
+}
+
+.left_content {
+    background-color: white;
+    padding: 5px;
+    margin-left: 316px;
+}
+
+.right_content {
+    background-color: #dddddd;
+    padding: 5px;
+    margin: 0px 170px 0px 170px;
+}
+
+.topAligned {
+    vertical-align: top;
+}
+
+#form_main_menu\:main_menu {
+    width: 285px !important;
+    background: #595c5d;
+    border: 0px;
+}
+
+#form_main_menu\:main_menu.ui-widget.ui-widget-content .ui-menuitem-link .ui-menuitem-text{
+    padding: 8px 0 8px 0;
+    font-size: 1.2em;
+    color: #ffffff;
+}
+
+#form_main_menu\:main_menu .ui-menuitem-link{
+    width: 96%;
+    font-weight: bold;
+}
+
+#form_main_menu\:main_menu .ui-menu-list .ui-widget-header{   
+    background: #595c5d;
+    border: 0;
+}
+
+.ui-menuitem-link.ui-corner-all.ui-state-hover{
+    background: #333232;
+}
+
+.btn_rep {
+    margin-left: 10px;
+    margin:0 5px 0 0;
+    padding:5px 10px 5px 10px;
+    height:29px;
+    color:white;
+    font-weight:bold;
+    border:1px #14A4FF solid;
+    border-radius:5px;
+    cursor:pointer;
+    background: #14A4FF;
+    box-shadow: 1px 1px 3px #666666;
+}
+
+.btn_rep:hover {
+  background: #3cb0fd;
+  text-decoration: none;
+}

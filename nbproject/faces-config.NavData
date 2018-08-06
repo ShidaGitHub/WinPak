@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Scene Scope="Project" version="2">
+    <Scope Scope="Faces Configuration Only"/>
+    <Scope Scope="Project">
+        <Node id="login.xhtml" x="18" y="109" zoom="true"/>
+        <Node id="index.xhtml" x="187" y="309" zoom="true"/>
+        <Node id="views/error.xhtml" x="18" y="9" zoom="true"/>
+        <Node id="loginerror.xhtml" x="18" y="75" zoom="true"/>
+        <Node id="views/home.xhtml" x="168" y="232" zoom="true"/>
+        <Node id="views/report08/report08set.xhtml" x="657" y="466" zoom="true"/>
+        <Node id="templates/layout.xhtml" x="16" y="43" zoom="true"/>
+        <Node id="views/report08/report08.xhtml" x="666" y="169" zoom="true"/>
+        <Node id="templates/report_layout.xhtml" x="14" y="144" zoom="true"/>
+    </Scope>
+    <Scope Scope="All Faces Configurations"/>
+</Scene>

@@ -1,0 +1,206 @@
+<ui:composition template="/templates/report_layout.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+
+    <ui:define name="title">Учет времени</ui:define>
+    <ui:define name="top">
+        <p:link outcome="/views/report05/report05set">
+            <h:graphicImage library="images" name="baseline_arrow_back.png" style="vertical-align: bottom"/>
+        </p:link>
+        Учет времени: 
+        <h:outputText value="#{report05.date1}" >
+            <f:convertDateTime pattern="dd.MM.yy" timeZone="#{report05.getTimeZone()}" />
+        </h:outputText>
+         - 
+        <h:outputText value="#{report05.date2}" >
+            <f:convertDateTime pattern="dd.MM.yy" timeZone="#{report05.getTimeZone()}" />
+        </h:outputText>
+    </ui:define>
+
+    <ui:define name="content">
+        <h:form id="form_report">
+            <p:growl id="msgs" showDetail="true" />
+            <div>
+                <p:dataTable id="report_dataTable" var="repData" value="#{report05.report05Data}"  
+                             scrollable="true" scrollWidth="100%" paginator="true" rows="10"
+                             paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                             rowsPerPageTemplate="10,50,100" >
+                    
+                    <f:facet name="header">
+                        <h:commandLink id="excel" >
+                            <p:graphicImage library="images" name="Excel.png" width="40"/>
+                            <p:dataExporter type="xls" target="report_dataTable" 
+                                            fileName="#{report05.getReportFileName()}"
+                                            options="#{report05.excelOpt}" postProcessor="#{report05.postProcessXLS}"/>
+                        </h:commandLink>
+                    </f:facet>
+                    
+                    <p:columnGroup type="header">
+                        <p:row>
+                            <!-- Если добавит колонки циклом - не работает фильтр -->
+                            <p:column headerText="Фамилия" width="100" rowspan="2" groupRow="true" filterBy="#{repData.cardHolder.lastName}" visible="#{report05.renderedCol('lastName')}" exportable="#{report05.renderedCol('lastName')}"/>
+                            <p:column headerText="Имя" width="100" rowspan="2" groupRow="true" filterBy="#{repData.cardHolder.firstName}" visible="#{report05.renderedCol('firstName')}" exportable="#{report05.renderedCol('firstName')}"/>
+                            <p:column headerText="Отчество" width="100" rowspan="2" groupRow="true" filterBy="#{repData.cardHolder.note1}" visible="#{report05.renderedCol('note1')}" exportable="#{report05.renderedCol('note1')}"/>
+                            <p:column headerText="Номер карты" width="100" rowspan="2" groupRow="true" filterBy="#{repData.cardNumber}" visible="#{report05.renderedCol('param3')}" exportable="#{report05.renderedCol('param3')}"/>
+                            <p:column headerText="Табельный номер" width="100" rowspan="2" groupRow="true" filterBy="#{repData.cardHolder.note2}" visible="#{report05.renderedCol('note2')}" exportable="#{report05.renderedCol('note2')}"/>
+                            <p:column headerText="Цех" width="100" rowspan="2" groupRow="true" filterBy="#{repData.cardHolder.note3}" visible="#{report05.renderedCol('note3')}" exportable="#{report05.renderedCol('note3')}"/>
+                            <p:column headerText="Служба" width="200" rowspan="2" groupRow="true" filterBy="#{repData.cardHolder.note4}" visible="#{report05.renderedCol('note4')}" exportable="#{report05.renderedCol('note4')}"/>
+                            <p:column headerText="Цех(полн. наименован.)" width="200" rowspan="2" groupRow="true" filterBy="#{repData.cardHolder.note5}" visible="#{report05.renderedCol('note5')}" exportable="#{report05.renderedCol('note5')}"/>
+                            <p:column headerText="Участок" width="200" rowspan="2" groupRow="true" filterBy="#{repData.cardHolder.note6}" visible="#{report05.renderedCol('note6')}" exportable="#{report05.renderedCol('note6')}"/>
+                            <p:column headerText="Должность" width="250" rowspan="2" groupRow="true" filterBy="#{repData.cardHolder.note7}" visible="#{report05.renderedCol('note7')}" exportable="#{report05.renderedCol('note7')}"/>
+                            <p:column headerText="Дата рождения" width="100" rowspan="2" groupRow="true" filterBy="#{repData.cardHolder.note8}" visible="#{report05.renderedCol('note8')}" exportable="#{report05.renderedCol('note8')}"/>
+                            <p:column headerText="Место рождения" width="250" rowspan="2" groupRow="true" filterBy="#{repData.cardHolder.note9}" visible="#{report05.renderedCol('note9')}" exportable="#{report05.renderedCol('note9')}"/>
+                            <p:column headerText="Место прописки" width="250" rowspan="2" groupRow="true" filterBy="#{repData.cardHolder.note10}" visible="#{report05.renderedCol('note10')}" exportable="#{report05.renderedCol('note10')}"/>
+                            <p:column headerText="Место проживания" width="250" rowspan="2" groupRow="true" filterBy="#{repData.cardHolder.note11}" visible="#{report05.renderedCol('note11')}" exportable="#{report05.renderedCol('note11')}"/>
+                            <p:column headerText="Семейное положение" width="200" rowspan="2" groupRow="true" filterBy="#{repData.cardHolder.note12}" visible="#{report05.renderedCol('note12')}" exportable="#{report05.renderedCol('note12')}"/>
+                            <p:column headerText="Образование" width="150" rowspan="2" groupRow="true" filterBy="#{repData.cardHolder.note13}" visible="#{report05.renderedCol('note13')}" exportable="#{report05.renderedCol('note13')}"/>
+                            <p:column headerText="Серия номер паспорта" width="100" rowspan="2" groupRow="true" filterBy="#{repData.cardHolder.note14}" visible="#{report05.renderedCol('note14')}" exportable="#{report05.renderedCol('note14')}"/>
+                            <p:column headerText="Кем выдан" width="250" rowspan="2" groupRow="true" filterBy="#{repData.cardHolder.note15}" visible="#{report05.renderedCol('note15')}" exportable="#{report05.renderedCol('note15')}"/>
+                            <p:column headerText="Дата выдачи" width="100" rowspan="2" groupRow="true" filterBy="#{repData.cardHolder.note16}" visible="#{report05.renderedCol('note16')}" exportable="#{report05.renderedCol('note16')}"/>
+                            <p:column headerText="Дата приема на работу" width="100" rowspan="2" groupRow="true" filterBy="#{repData.cardHolder.note17}" visible="#{report05.renderedCol('note17')}" exportable="#{report05.renderedCol('note17')}"/>
+                            <p:column headerText="Характер работы" width="250" rowspan="2" groupRow="true" filterBy="#{repData.cardHolder.note18}" visible="#{report05.renderedCol('note18')}" exportable="#{report05.renderedCol('note18')}"/>
+                            <p:column headerText="Номер приказа об увольнении" width="100" rowspan="2" groupRow="true" filterBy="#{repData.cardHolder.note19}" visible="#{report05.renderedCol('note19')}" exportable="#{report05.renderedCol('note19')}"/>
+                            <p:column headerText="Дата приказа об увольнении" width="100" rowspan="2" groupRow="true" filterBy="#{repData.cardHolder.note20}" visible="#{report05.renderedCol('note20')}" exportable="#{report05.renderedCol('note20')}" />
+                            <p:column headerText="Дата увольнения" width="100" rowspan="2" groupRow="true" filterBy="#{repData.cardHolder.note21}" visible="#{report05.renderedCol('note21')}" exportable="#{report05.renderedCol('note21')}"/>
+                            <p:column headerText="Должность сокр" width="100" rowspan="2" groupRow="true" filterBy="#{repData.cardHolder.note22}" visible="#{report05.renderedCol('note22')}" exportable="#{report05.renderedCol('note22')}"/>
+                            <p:column headerText="Режим работы" width="100" rowspan="2" groupRow="true" filterBy="#{repData.cardHolder.note23}" visible="#{report05.renderedCol('note23')}" exportable="#{report05.renderedCol('note23')}"/>
+                            <p:column headerText="Заказчик" width="100" rowspan="2" groupRow="true" filterBy="#{repData.cardHolder.note24}" visible="#{report05.renderedCol('note24')}" exportable="#{report05.renderedCol('note24')}"/>
+                            
+                            <p:column headerText="Данные" width="50" rowspan="2" />
+                            <ui:repeat value="#{report05.getDistinctDateRange()}" var="date">
+                                <p:column colspan="4" headerText="Дата" width="280">
+                                    <f:facet name="header">
+                                        <h:outputText value="#{date}" style="#{report05.isHoliday(date) ? 'color: #d20005' : ''}">
+                                            <f:convertDateTime pattern="dd MMMM" timeZone="#{report05.getTimeZone()}"/>
+                                        </h:outputText>
+                                    </f:facet>
+                                </p:column>
+                            </ui:repeat>
+                            
+                            <p:column headerText="Итог: Время" width="80" rowspan="2" groupRow="false"/>
+                            <p:column headerText="Итог: Вх/Вых" width="80" rowspan="2" groupRow="false"/>
+                        </p:row>
+                        <p:row>
+                            <ui:repeat value="#{report05.getDateRange()}" var="day" varStatus="dayStatus">
+                                <p:column headerText="#{report05.getHeaderOnDate(dayStatus.index)}" width="80" groupRow="false"/>
+                            </ui:repeat>
+                        </p:row>
+                    </p:columnGroup>                    
+                    
+                    <!-- Если добавит колонки циклом - не работает фильтр;
+                        использовать visible!!! с rendered - будут неправельные группировки
+                    -->
+                    <p:column headerText="Фамилия" groupRow="true" visible="#{report05.renderedCol('lastName')}" exportable="#{report05.renderedCol('lastName')}" width="100">
+                        <h:outputText value="#{repData.cardHolder.lastName}" />
+                    </p:column>
+                    <p:column headerText="Имя" groupRow="true" visible="#{report05.renderedCol('firstName')}" exportable="#{report05.renderedCol('firstName')}" width="100">
+                        <h:outputText value="#{repData.cardHolder.firstName}" />
+                    </p:column>
+                    <p:column headerText="Отчество" groupRow="true" visible="#{report05.renderedCol('note1')}" exportable="#{report05.renderedCol('note1')}" width="100">
+                        <h:outputText value="#{repData.cardHolder.note1}" />
+                    </p:column>
+                    <p:column headerText="Номер карты" groupRow="true" visible="#{report05.renderedCol('param3')}" exportable="#{report05.renderedCol('param3')}" width="100">
+                        <h:outputText value="#{repData.cardNumber}" />
+                    </p:column>
+                    <p:column headerText="Табельный номер" groupRow="true" visible="#{report05.renderedCol('note2')}" exportable="#{report05.renderedCol('note2')}" width="100">
+                        <h:outputText value="#{repData.cardHolder.note2}" />
+                    </p:column>
+                    <p:column headerText="Цех" groupRow="true" visible="#{report05.renderedCol('note3')}" exportable="#{report05.renderedCol('note3')}" width="100">
+                        <h:outputText value="#{repData.cardHolder.note3}" />
+                    </p:column>
+                    <p:column headerText="Служба" groupRow="true" visible="#{report05.renderedCol('note4')}" exportable="#{report05.renderedCol('note4')}" width="200">
+                        <h:outputText value="#{repData.cardHolder.note4}" />
+                    </p:column>
+                    <p:column headerText="Цех(полн. наименован.)" groupRow="true" visible="#{report05.renderedCol('note5')}" exportable="#{report05.renderedCol('note5')}" width="200">
+                        <h:outputText value="#{repData.cardHolder.note5}" />
+                    </p:column>
+                    <p:column headerText="Участок" groupRow="true" visible="#{report05.renderedCol('note6')}" exportable="#{report05.renderedCol('note6')}" width="200">
+                        <h:outputText value="#{repData.cardHolder.note6}" />
+                    </p:column>
+                    <p:column headerText="Должность" groupRow="true" visible="#{report05.renderedCol('note7')}" exportable="#{report05.renderedCol('note7')}" width="250">
+                        <h:outputText value="#{repData.cardHolder.note7}" />
+                    </p:column>
+                    <p:column headerText="Дата рождения" groupRow="true" visible="#{report05.renderedCol('note8')}" exportable="#{report05.renderedCol('note8')}" width="100">
+                        <h:outputText value="#{repData.cardHolder.note8}" />
+                    </p:column>
+                    <p:column headerText="Место рождения" groupRow="true" visible="#{report05.renderedCol('note9')}" exportable="#{report05.renderedCol('note9')}" width="250">
+                        <h:outputText value="#{repData.cardHolder.note9}" />
+                    </p:column>
+                    <p:column headerText="Место прописки" groupRow="true" visible="#{report05.renderedCol('note10')}" exportable="#{report05.renderedCol('note10')}" width="250">
+                        <h:outputText value="#{repData.cardHolder.note10}" />
+                    </p:column>
+                    <p:column headerText="Место проживания" groupRow="true" visible="#{report05.renderedCol('note11')}" exportable="#{report05.renderedCol('note11')}" width="250">
+                        <h:outputText value="#{repData.cardHolder.note11}" />
+                    </p:column>
+                    <p:column headerText="Семейное положение" groupRow="true" visible="#{report05.renderedCol('note12')}" exportable="#{report05.renderedCol('note12')}" width="200">
+                        <h:outputText value="#{repData.cardHolder.note12}" />
+                    </p:column>
+                    <p:column headerText="Образование" groupRow="true" visible="#{report05.renderedCol('note13')}" exportable="#{report05.renderedCol('note13')}" width="150">
+                        <h:outputText value="#{repData.cardHolder.note13}" />
+                    </p:column>
+                    <p:column headerText="Серия номер паспорта" groupRow="true" visible="#{report05.renderedCol('note14')}" exportable="#{report05.renderedCol('note14')}" width="100">
+                        <h:outputText value="#{repData.cardHolder.note14}" />
+                    </p:column>
+                    <p:column headerText="Кем выдан" groupRow="true" visible="#{report05.renderedCol('note15')}" exportable="#{report05.renderedCol('note15')}" width="250">
+                        <h:outputText value="#{repData.cardHolder.note15}" />
+                    </p:column>
+                    <p:column headerText="Дата выдачи" groupRow="true" visible="#{report05.renderedCol('note16')}" exportable="#{report05.renderedCol('note16')}" width="100">
+                        <h:outputText value="#{repData.cardHolder.note16}" />
+                    </p:column>
+                    <p:column headerText="Дата приема на работу" groupRow="true" visible="#{report05.renderedCol('note17')}" exportable="#{report05.renderedCol('note17')}" width="100">
+                        <h:outputText value="#{repData.cardHolder.note17}" />
+                    </p:column>
+                    <p:column headerText="Характер работы" groupRow="true" visible="#{report05.renderedCol('note18')}" exportable="#{report05.renderedCol('note18')}" width="250">
+                        <h:outputText value="#{repData.cardHolder.note18}" />
+                    </p:column>
+                    <p:column headerText="Номер приказа об увольнении" groupRow="true" visible="#{report05.renderedCol('note19')}" exportable="#{report05.renderedCol('note19')}" width="100">
+                        <h:outputText value="#{repData.cardHolder.note19}" />
+                    </p:column>
+                    <p:column headerText="Дата приказа об увольнении" groupRow="true" visible="#{report05.renderedCol('note20')}" exportable="#{report05.renderedCol('note20')}" width="100">
+                        <h:outputText value="#{repData.cardHolder.note20}" />
+                    </p:column>
+                    <p:column headerText="Дата увольнения" groupRow="true" visible="#{report05.renderedCol('note21')}" exportable="#{report05.renderedCol('note21')}" width="100">
+                        <h:outputText value="#{repData.cardHolder.note21}" />
+                    </p:column>
+                    <p:column headerText="Должность сокр" groupRow="true" visible="#{report05.renderedCol('note22')}" exportable="#{report05.renderedCol('note22')}" width="100">
+                        <h:outputText value="#{repData.cardHolder.note22}" />
+                    </p:column>
+                    <p:column headerText="Режим работы" groupRow="true" visible="#{report05.renderedCol('note23')}" exportable="#{report05.renderedCol('note23')}" width="100">
+                        <h:outputText value="#{repData.cardHolder.note23}" />
+                    </p:column>
+                    <p:column headerText="Заказчик" groupRow="true" visible="#{report05.renderedCol('note24')}" exportable="#{report05.renderedCol('note24')}" width="100">
+                        <h:outputText value="#{repData.cardHolder.note24}" />
+                    </p:column>
+                    
+                    
+                    <p:column headerText="Данные" width="50" >
+                        <h:outputText value="#{repData.getDataInfoStr()}" />
+                    </p:column>
+                    
+                    <p:columns value="#{report05.getDateRange()}" 
+                               var="period" columnIndexVar="colIndex" groupRow="false"
+                               style="#{repData.getCellStyle(colIndex)}">                        
+                        <f:facet name="header">
+                            <h:outputText value="#{period}" >
+                                <f:convertDateTime pattern="dd MMMM" timeZone="#{report05.getTimeZone()}"/>
+                            </h:outputText>
+                        </f:facet>
+                        
+                        <h:outputText value="#{repData.getReportValueOnDate(period, colIndex)}" />
+                    </p:columns>
+                    
+                    <p:column headerText="Итог: Время" width="100" groupRow="false" style="#{repData.getCellStyle(0)}">
+                        <h:outputText value="#{repData.getTotalTime()}" />
+                    </p:column>
+                    <p:column headerText="Итог: Вх/Вых" width="100" groupRow="false" style="#{repData.getCellStyle(0)}">
+                        <h:outputText value="#{repData.getTotalInOut()}" />
+                    </p:column>
+                </p:dataTable>
+            </div>
+        </h:form>
+    </ui:define>
+</ui:composition>

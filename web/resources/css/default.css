@@ -1,0 +1,79 @@
+body {
+    background-color: #ffffff;
+    font-size: 12px;
+    font-family: Verdana, "Verdana CE",  Arial, "Arial CE", "Lucida Grande CE", lucida, "Helvetica CE", sans-serif;
+    color: #000000;  
+    margin: 10px;
+}
+
+h1 {
+    font-family: Arial, "Arial CE", "Lucida Grande CE", lucida, "Helvetica CE", sans-serif;
+    border-bottom: 1px solid #AFAFAF; 
+    font-size:  16px;
+    font-weight: bold;
+    margin: 0px;
+    padding: 0px;
+    color: #D20005;
+}
+
+a:link, a:visited {
+  color: #045491;
+  font-weight : bold;
+  text-decoration: none;
+}
+
+a:link:hover, a:visited:hover  {
+  color: #045491;
+  font-weight : bold;
+  text-decoration : underline;
+}
+
+.card {
+  border-radius: 0px;
+  background: #ffffff;
+  padding: 16px;
+  box-sizing: border-box;
+  margin-bottom: 16px;
+  border: 1px solid #dddddd;
+  -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
+  -moz-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
+}
+.card.card-w-title {
+    padding-bottom: 16px; }
+.card.no-gutter {
+    margin-bottom: 0; }
+.card h1 {
+    font-size: 20px;
+    font-weight: 400;
+    margin: 10px 0; }
+.card h1:first-child {
+      margin-top: 0px; }
+.card h2 {
+    font-size: 18px;
+    font-weight: 400; }
+.card h3 {
+    font-size: 16px;
+    font-weight: 400; }
+.card h4 {
+    font-size: 14px;
+    font-weight: 400; }
+
+.card-w-title-h1{
+    width: 100%;
+}
+.card-w-title-bsa, .card-w-title-busa{
+    vertical-align: top;
+}
+  
+.ui-inputfield, .ui-widget-content .ui-inputfield, .ui-widget-header .ui-inputfield{
+    box-shadow: 0 0 0;    
+}
+.ui-inputfield.ui-state-focus, .ui-widget-content .ui-inputfield.ui-state-focus, .ui-widget-header .ui-inputfield.ui-state-focus{
+    box-shadow: 0 0 0;
+}
+
+.ui-autocomplete-input.ui-inputfield.ui-widget.ui-state-default.ui-corner-all{
+    width: 100%;
+}
+
